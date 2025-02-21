@@ -127,7 +127,8 @@ namespace Simple_Inventory_Management_System
                         Console.WriteLine($"Product: {product.ProductName}, Price: {product.ProductPrice}, Quantity: {product.Quantity}");
                     }
                     
-                } else if (userInput == 6)
+                } 
+                else if (userInput == 6)
                 {
                     break;
                 }
