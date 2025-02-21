@@ -22,7 +22,23 @@ namespace Simple_Inventory_Management_System
 
                 if (userInput == 1)
                 {
+                    try
+                    {
+                        Console.WriteLine("Enter product name: ");
+                        string? productName = Console.ReadLine();
+                        Console.WriteLine("Enter product price: ");
                     
+                        double price = double.Parse(Console.ReadLine());
+                        Console.WriteLine("Enter product quantity: ");
+                        int quantity = Convert.ToInt32(Console.ReadLine());
+                    
+                        products.Add(new Product(productName, price, quantity));
+                        Console.WriteLine($"Product: {productName}, Price: {price}, Quantity: {quantity}. Added successfully!");
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
                 }
                 else if (userInput == 2)
                 {
