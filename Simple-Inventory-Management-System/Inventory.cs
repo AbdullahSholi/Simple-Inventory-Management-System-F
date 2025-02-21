@@ -5,6 +5,7 @@ namespace Simple_Inventory_Management_System
     {
         public static void Main(string[] args)
         {
+            List<Product> products = new List<Product>();
             while (true)
             {
                 Console.WriteLine("----------------- Simple Inventory Management System ------------------");
@@ -16,7 +17,7 @@ namespace Simple_Inventory_Management_System
                 Console.WriteLine("| 6. Exit                                                              |");
                 Console.WriteLine("-----------------------------------------------------------------------");
                 
-                List<Product> products = new List<Product>();
+                
                 
                 int userInput = Convert.ToInt32(Console.ReadLine());
 
@@ -26,9 +27,10 @@ namespace Simple_Inventory_Management_System
                     {
                         Console.WriteLine("Enter product name: ");
                         string? productName = Console.ReadLine();
+                        
                         Console.WriteLine("Enter product price: ");
-                    
                         double price = double.Parse(Console.ReadLine());
+                        
                         Console.WriteLine("Enter product quantity: ");
                         int quantity = Convert.ToInt32(Console.ReadLine());
                     
@@ -42,6 +44,11 @@ namespace Simple_Inventory_Management_System
                 }
                 else if (userInput == 2)
                 {
+                    Console.WriteLine("|          Product Name          |          Product Price          |          Product Quantity        |");
+                    foreach (Product product in products)
+                    {
+                        Console.WriteLine($"|          {product.ProductName}          |          {product.ProductPrice}          |          {product.Quantity}        |");
+                    }
                     
                 } else if (userInput == 3)
                 {
