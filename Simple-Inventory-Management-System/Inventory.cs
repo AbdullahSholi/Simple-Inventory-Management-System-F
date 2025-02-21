@@ -50,10 +50,45 @@ namespace Simple_Inventory_Management_System
                         Console.WriteLine($"|          {product.ProductName}          |          {product.ProductPrice}          |          {product.Quantity}        |");
                     }
                     
-                } else if (userInput == 3)
+                } 
+                else if (userInput == 3)
                 {
-                    
-                } else if (userInput == 4)
+                    bool flag = false;
+
+                    Console.WriteLine("Enter product name: ");
+                    string? productName = Console.ReadLine();
+                    foreach (Product product in products)
+                    {
+                        if (product.ProductName == productName)
+                        {
+                            flag = true;
+                        }
+                    }
+
+                    if (flag){
+                        foreach (Product product in products)
+                        {
+
+                            Console.WriteLine("Enter new price: ");
+                            double price = double.Parse(Console.ReadLine());
+                            product.ProductPrice = price;
+
+                            Console.WriteLine("Enter new quantity: ");
+                            int quantity = Convert.ToInt32(Console.ReadLine());
+                            product.Quantity = quantity;
+
+                            Console.WriteLine("Product updated successfully!");
+
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Product not found!");
+                    }  
+
+
+                } 
+                else if (userInput == 4)
                 {
                     
                 } else if (userInput == 5)
