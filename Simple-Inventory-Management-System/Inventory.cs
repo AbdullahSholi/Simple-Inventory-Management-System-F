@@ -111,8 +111,21 @@ namespace Simple_Inventory_Management_System
                     {
                         Console.WriteLine("Product not found!");
                     }
-                } else if (userInput == 5)
+                } 
+                else if (userInput == 5)
                 {
+                    Console.WriteLine("Enter product name: ");
+                    string? productName = Console.ReadLine();
+                    
+                    Product? product = products.Find(p => p.ProductName == productName);
+                    if (product == null)
+                    {
+                        Console.WriteLine("Product not found!");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Product: {product.ProductName}, Price: {product.ProductPrice}, Quantity: {product.Quantity}");
+                    }
                     
                 } else if (userInput == 6)
                 {
