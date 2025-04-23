@@ -1,12 +1,24 @@
-namespace Simple_Inventory_Management_System;
+namespace Simple_Inventory_Management_System.IO;
 
-public class ConsoleIO : IInputHandler, IOutputHandler
+public class ConsoleIo : IInputHandler, IOutputHandler
 {
-    public string? ReadLine() => Console.ReadLine();
+    public string? ReadLine()
+    {
+        return Console.ReadLine();
+    }
 
-    public double ReadDouble() => double.Parse(ReadLine());
+    public double ReadDouble()
+    {
+        return double.Parse(ReadLine());
+    }
 
-    public int ReadInt() => int.Parse(ReadLine());
+    public int ReadInt()
+    {
+        return int.Parse(ReadLine());
+    }
 
-    public void WriteLine(string message) => Console.WriteLine(message);
+    public void WriteLine(string message)
+    {
+        Console.WriteLine(message);
+    }
 }

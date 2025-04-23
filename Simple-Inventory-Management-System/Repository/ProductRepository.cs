@@ -1,8 +1,10 @@
-namespace Simple_Inventory_Management_System;
+using Simple_Inventory_Management_System.Entity;
+
+namespace Simple_Inventory_Management_System.Repository;
 
 public class ProductRepository : IProductRepository
 {
-    List<Product> products = new();
+    private readonly List<Product> products = new();
 
     public void Add(Product product)
     {
