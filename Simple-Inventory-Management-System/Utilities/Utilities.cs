@@ -1,5 +1,5 @@
 using Simple_Inventory_Management_System.IO;
-using Simple_Inventory_Management_System.Service;
+using Simple_Inventory_Management_System.StrategyPattern.Service;
 
 namespace Simple_Inventory_Management_System.Utilities;
 
@@ -44,8 +44,16 @@ public class Utilities
                     return true;
                 }
             },
-            { 4, () => { return true; } },
-            { 5, () => { return true; } },
+            { 4, () =>
+            {
+                _writableService.DeleteProduct();
+                return true;
+            } },
+            { 5, () =>
+            {
+                _readableService.PrintFoundProducts();
+                return true;
+            } },
             { 6, () => false }
         };
 

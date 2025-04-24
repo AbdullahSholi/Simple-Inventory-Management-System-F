@@ -1,19 +1,18 @@
 using Simple_Inventory_Management_System.Entity;
 using Simple_Inventory_Management_System.IO;
-using Simple_Inventory_Management_System.Repository;
 using Simple_Inventory_Management_System.Utilities;
 
-namespace Simple_Inventory_Management_System.Service;
+namespace Simple_Inventory_Management_System.StrategyPattern.Service;
 
 public class Service : IInventoryServiceReadable, IInventoryServiceWritable
 {
     private readonly IInputHandler _input;
     private readonly IOutputHandler _output;
-    private readonly IProductRepository _repository;
+    private readonly IDatabaseStrategy _databaseStrategy;
 
-    public Service(IProductRepository repository, IInputHandler input, IOutputHandler output)
+    public Service(IDatabaseStrategy databaseStrategy, IInputHandler input, IOutputHandler output)
     {
-        _repository = repository;
+        _databaseStrategy= databaseStrategy;
         _input = input;
         _output = output;
     }
@@ -21,11 +20,11 @@ public class Service : IInventoryServiceReadable, IInventoryServiceWritable
     public void ViewAllProducts()
     {
         _output.WriteLine(Messages.ProductsResultHeader);
-        _repository.GetAllProducts().ForEach(product =>
+        _databaseStrategy.GetAllProducts().ForEach(product =>
             _output.WriteLine(
                 $"|          {product.ProductName}          |          {product.ProductPrice}          |          {product.Quantity}        |"));
     }
-
+    
     public void AddProduct()
     {
         try
@@ -39,7 +38,7 @@ public class Service : IInventoryServiceReadable, IInventoryServiceWritable
             _output.WriteLine(Messages.EnterProductQuantity);
             var quantity = _input.ReadInt();
 
-            _repository.Add(new Product(productName, price, quantity));
+            _databaseStrategy.Add(new Product(productName, price, quantity));
             _output.WriteLine($"Product: {productName}, Price: {price}, Quantity: {quantity}. Added successfully!");
         }
         catch (Exception e)
@@ -60,20 +59,35 @@ public class Service : IInventoryServiceReadable, IInventoryServiceWritable
                 var quantity = _input.ReadInt();
 
                 var updatedProduct = new Product(product.ProductName, price, quantity);
-                _repository.EditProduct(updatedProduct);
+                _databaseStrategy.EditProduct(updatedProduct);
                 _output.WriteLine(Messages.ProductUpdated);
             }
         else
             _output.WriteLine(Messages.ProductNotFound);
     }
 
-    private List<Product> FindProducts()
+    public void DeleteProduct()
     {
         _output.WriteLine(Messages.EnterProductName);
         var productName = _input.ReadLine();
-        var productsToUpdate =
-            _repository.GetAllProducts().Where(product => product.ProductName == productName).ToList();
+        _databaseStrategy.DeleteProduct(productName);
+    }
 
-        return productsToUpdate;
+    public List<Product> FindProducts()
+    {
+        _output.WriteLine(Messages.EnterProductName);
+        var productName = _input.ReadLine();
+        var products =_databaseStrategy.FindProductsByName(productName);
+
+        return products;
+    }
+
+    public void PrintFoundProducts()
+    {
+        var products = FindProducts();
+        _output.WriteLine(Messages.ProductsResultHeader);
+        products.ForEach(product =>
+            _output.WriteLine(
+                $"|          {product.ProductName}          |          {product.ProductPrice}          |          {product.Quantity}        |"));
     }
 }
