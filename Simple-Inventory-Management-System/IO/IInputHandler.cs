@@ -1,6 +1,6 @@
 namespace Simple_Inventory_Management_System.IO;
 
-public interface IInputHandler
+public interface IInputHandler : IOHandler
 {
     string? ReadLine();
     double ReadDouble();
