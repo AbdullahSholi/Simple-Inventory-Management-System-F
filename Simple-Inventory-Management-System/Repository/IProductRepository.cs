@@ -1,4 +1,6 @@
-namespace Simple_Inventory_Management_System;
+using Simple_Inventory_Management_System.Entity;
+
+namespace Simple_Inventory_Management_System.Repository;
 
 public interface IProductRepository
 {
@@ -7,5 +9,4 @@ public interface IProductRepository
     public void EditProduct(Product updatedProduct);
 
     public List<Product> GetAllProducts();
-    
 }

@@ -1,11 +1,14 @@
-namespace Simple_Inventory_Management_System;
+using Simple_Inventory_Management_System.IO;
+using Simple_Inventory_Management_System.Service;
+
+namespace Simple_Inventory_Management_System.Utilities;
 
 public class Utilities
 {
-    private readonly IInventoryServiceReadable _readableService;
-    private readonly IInventoryServiceWritable _writableService;
     private readonly IInputHandler _input;
     private readonly IOutputHandler _output;
+    private readonly IInventoryServiceReadable _readableService;
+    private readonly IInventoryServiceWritable _writableService;
 
     public Utilities(IInventoryServiceReadable readableService, IInventoryServiceWritable writableService,
         IInputHandler inputHandler, IOutputHandler outputHandler)
@@ -43,38 +46,23 @@ public class Utilities
             },
             { 4, () => { return true; } },
             { 5, () => { return true; } },
-            { 6, () => false },
+            { 6, () => false }
         };
 
-        if (menuOptions.TryGetValue(userInput, out var operation))
-        {
-            return operation();
-        }
+        if (menuOptions.TryGetValue(userInput, out var operation)) return operation();
 
-        _output.WriteLine("Invalid Operation");
+        _output.WriteLine(Messages.InvalidOperation);
         return true;
     }
 
     public void ShowMenu()
     {
-        bool continueRunning = true;
+        var continueRunning = true;
         while (continueRunning)
         {
-            ShowDashboard();
-            int userInput = _input.ReadInt();
+            _output.WriteLine(Messages.InventoryMenu);
+            var userInput = _input.ReadInt();
             continueRunning = MenuOptions(userInput);
         }
-    }
-
-    public void ShowDashboard()
-    {
-        _output.WriteLine("----------------- Simple Inventory Management System ------------------");
-        _output.WriteLine("| 1. Add a product                                                     |");
-        _output.WriteLine("| 2. View all the products                                             |");
-        _output.WriteLine("| 3. Edit a product                                                    |");
-        _output.WriteLine("| 4. Delete a product                                                  |");
-        _output.WriteLine("| 5. Search for a product                                              |");
-        _output.WriteLine("| 6. Exit                                                              |");
-        _output.WriteLine("-----------------------------------------------------------------------");
     }
 }
